@@ -23,6 +23,16 @@ public class User {
     @Email(message = "*Enter correctly email (example@examp.org)")
     private String email;
 
+    @Column(name = "password", nullable = true)
+    private String password;
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public User() {
     }
