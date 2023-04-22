@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background-color: bisque;
+      font-family: "Courier New",sans-serif;
+      font-size: 18px;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    header {
+      width: 100%;
+      background-color: white;
+      height: 80px;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .header-section {
+      width: 70%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    nav {
+      display: flex;
+    }
+    .list__item {
+      list-style: none;
+    }
+    .navi__link {
+      font-family: sans-serif;
+      font-size: 22px;
+      font-weight: bold;
+      text-decoration: none;
+      color: #085db2;
+
+      margin-right: 45px;
+
+      border-bottom: 2px solid rgba(0, 0, 0, 0.00);
+      transition: .2s ease-in-out;
+    }
+    .navi__link:hover {
+      border-bottom: 2px solid #f8d38e;
+    }
+
+    .form{
+      margin-top: 150px;
+      margin-bottom: 35px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      float: left;
+      width: 450px;
+      background-color: #eedfdf;
+
+      border: 2px solid #3b3b3b;
+      border-radius: 5px;
+    }
+    .input__container {
+      clear: both;
+      text-align: right;
+      line-height: 35px;
+      margin-bottom: 20px;
+    }
+    .title__form {
+      text-align: center;
+      margin: 22px 22px;
+    }
+
+
+    input {
+      padding: 6px 8px;
+      border: 1px solid darkgray;
+      border-radius: 3px;
+      /*margin-bottom: 10px;*/
+      outline: none;
+    }
+    input::placeholder {
+      color: darkgray;
+      font-style: italic;
+      font-family: "Courier New", sans-serif;
+    }
+    label {
+      float: left;
+      font-weight: 600;
+      padding-right: 12px ;
+    }
+
+    .btn__submit {
+      width: 100%;
+
+      text-transform: uppercase;
+      font-family: "Courier New", sans-serif;
+      font-size: inherit;
+      font-weight: bold;
+
+      cursor: pointer;
+      padding: 8px 20px;
+      background-color: rgba(152, 204, 98, 0.93);
+      color: #fff;
+      border: none;
+      border-radius: 3px;
+
+      margin-bottom: 22px;
+    }
+    .btn__submit:hover{
+      background-color: #69a82c;
+    }
+    a.btn__submit {
+      display: block;
+      text-align: center;
+
+      text-decoration: none;
+      width: 260px;
+
+    }
+
+    .error__container {
+      text-align: right;
+      margin-bottom: 20px;
+      color: #ce0000;
+      font-size: 0.7em;
+    }
+    .form__container {
+      width: 300px;
+    }
+  </style>
+    <title>Login page</title>
+</head>
+<body>
+<header>
+  <section class="header-section">
+    <div class="logo">
+      <a href="https://platform.kata.academy/user/statistic" target="_blank"><img src="https://platform.kata.academy/images/header-logo.svg" alt="kata-logo"></a>
+    </div>
+    <div class="navigation">
+      <nav>
+        <li class="list__item"><a href="https://platform.kata.academy/user/statistic" target="_blank" class="navi__link" title="Main page">Main</a></li>
+        <li class="list__item"><a href="https://platform.kata.academy/user/courses/1" target="_blank" class="navi__link" title="Java core course">Java Core</a></li>
+        <li class="list__item"><a href="https://platform.kata.academy/user/courses/2" target="_blank" class="navi__link" title="Java pre-project course">Java pre-project</a></li>
+        <li class="list__item"><a href="https://t.me/kata_academy" class="navi__link" title="Join to Telegram-channel">Telegram</a></li>
+      </nav>
+    </div>
+  </section>
+</header>
+  <div class="form">
+      <h2 class="title__form">Login on application</h2>
+      <form class="form__container" name="f" method="post" action="/process_login">
+        <div class="input__container">
+          <label for="username">Login: </label>
+          <input type="text" name="username" id="username">
+        </div>
+        <div class="input__container">
+          <label for="password">Password: </label>
+          <input type="password" name="password" id="password">
+        </div>
+        <button class="btn__submit" type="submit" title="let's get it">Login</button>
+        <p class="error__container" th:if="${param.error}"><b> *Incorrect login or password</b></p>
+        <a href="registration" class="btn__submit" title="registration">Registration</a>
+      </form>
+    </div>
+  </div>
+
+</body>
+</html>

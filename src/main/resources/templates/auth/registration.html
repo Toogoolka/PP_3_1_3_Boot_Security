@@ -91,58 +91,38 @@
         .form__container {
             width: 300px;
         }
-        .link {
-            display: block;
-            padding: 7px 7px;
-            border:none;
-            border-radius: 3px;
-
-            background-color: rgba(204, 199, 98, 0.93);
-            color: #fff;
-            text-decoration: none;
-            font-weight: bold;
-            text-transform: uppercase;
-            margin-bottom: 20px;
-        }
-
-        .link:hover {
-            background-color: #69a82c;
-        }
     </style>
-    <title>Create new user</title>
+    <title>Registration page</title>
 </head>
 <body>
-    <div style="width: 450px; margin-top: 150px">
-        <a class="link" href="/data?name=" style="text-align: center; font-size: 24px">back to database</a>
-    </div>
-    
-    <div class="form">
-        <h2 class="header table-header">Create new User</h2>
-        <form class="form__container" th:method="POST" th:action="@{/new}" th:object="${user}">
-            <div class="field_place">
-                <label for="name">Name:</label>
-                <input type="text" th:field="*{username}" id="name" placeholder="German Sevostianov">
-                <p class="errors" th:if ="${#fields.hasErrors('username')}" th:errors="*{username}">Name error</p>
-            </div>
-            <div class="field_place">
-                <label for="password">Password:</label>
-                <input type="password" th:field="*{password}" id="password">
-                <p class="errors" th:if ="${#fields.hasErrors('password')}" th:errors="*{password}">Name error</p>
-            </div>
-            <div class="field_place">
-                <label for="age">Age:</label>
-                <input type="number" th:field="*{age}" id="age">
-                <p class="errors" th:if ="${#fields.hasErrors('age')}" th:errors="*{age}">Name error</p>
-            </div>
-            <div class="field_place">
-                <label for="email">Email:</label>
-                <input type="text" th:field="*{email}" id="email" placeholder="german@kata.academy">
-                <p class="errors" th:if ="${#fields.hasErrors('email')}" th:errors="*{email}">Name error</p>
-            </div>
-            <br>
-            <button class="btn__submit" type="submit">Create new user</button>
-        </form>
-    </div>
+
+<div class="form">
+    <h2 class="header table-header">Registration</h2>
+    <form class="form__container" th:method="POST" th:action="@{/auth/registration}" th:object="${user}">
+        <div class="field_place">
+            <label for="name">Name:</label>
+            <input type="text" th:field="*{username}" id="name" placeholder="German_Sevostianov">
+            <p class="errors" th:if ="${#fields.hasErrors('username')}" th:errors="*{username}">Name error</p>
+        </div>
+        <div class="field_place">
+            <label for="password">Password:</label>
+            <input type="password" th:field="*{password}" id="password">
+            <p class="errors" th:if ="${#fields.hasErrors('password')}" th:errors="*{password}">Name error</p>
+        </div>
+        <div class="field_place">
+            <label for="age">Age:</label>
+            <input type="number" th:field="*{age}" id="age">
+            <p class="errors" th:if ="${#fields.hasErrors('age')}" th:errors="*{age}">Name error</p>
+        </div>
+        <div class="field_place">
+            <label for="email">Email:</label>
+            <input type="text" th:field="*{email}" id="email" placeholder="german@kata.academy">
+            <p class="errors" th:if ="${#fields.hasErrors('email')}" th:errors="*{email}">Name error</p>
+        </div>
+        <br>
+        <button class="btn__submit" type="submit">Registration</button>
+    </form>
+</div>
 
 
 </body>
