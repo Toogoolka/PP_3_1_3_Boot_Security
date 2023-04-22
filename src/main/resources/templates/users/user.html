@@ -131,7 +131,7 @@
 
 
   </style>
-    <title th:text="${user.getName()}">User</title>
+    <title th:text="${user.getUsername()}">User</title>
 </head>
 <body>
   <div style="width: 450px; margin-top: 150px">
@@ -142,8 +142,8 @@
     <form class="form__container" th:method="PATCH" th:action="@{/users/{id}(id=${user.getId()})}" th:object="${user}">
       <div class="field_place">
         <label for="name">Name:</label>
-        <input type="text" th:field="*{name}" id="name" placeholder="German Sevostianov">
-        <p class="errors" th:if ="${#fields.hasErrors('name')}" th:errors="*{name}">Name error</p>
+        <input type="text" th:field="*{username}" id="name" placeholder="German Sevostianov">
+        <p class="errors" th:if ="${#fields.hasErrors('username')}" th:errors="*{username}">Name error</p>
       </div>
       <div class="field_place">
         <label for="age">Age:</label>

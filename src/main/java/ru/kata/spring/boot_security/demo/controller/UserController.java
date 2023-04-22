@@ -29,14 +29,13 @@ public class UserController {
     @GetMapping("/new")
     public String newUser(Model model) {
         model.addAttribute("user", new User());
-
         return "users/new";
     }
 
     @GetMapping("/data")
     public String show(@RequestParam(value = "name", required = false) String name,
                        Model model) {
-        model.addAttribute("users", userService.findByName(name));
+        model.addAttribute("users", userService.findByUsername(name));
         return "users/data";
     }
     @GetMapping("/users/{id}")

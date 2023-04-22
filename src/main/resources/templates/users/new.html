@@ -122,8 +122,8 @@
         <form class="form__container" th:method="POST" th:action="@{/new}" th:object="${user}">
             <div class="field_place">
                 <label for="name">Name:</label>
-                <input type="text" th:field="*{name}" id="name" placeholder="German Sevostianov">
-                <p class="errors" th:if ="${#fields.hasErrors('name')}" th:errors="*{name}">Name error</p>
+                <input type="text" th:field="*{username}" id="name" placeholder="German Sevostianov">
+                <p class="errors" th:if ="${#fields.hasErrors('username')}" th:errors="*{username}">Name error</p>
             </div>
             <div class="field_place">
                 <label for="age">Age:</label>

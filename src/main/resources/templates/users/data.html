@@ -106,7 +106,7 @@
     </div>
 
     <ul class="users_list" th:each="user : ${users}">
-      <a class = "user_link" th:href="@{/users/{id}(id = ${user.getId()})}" th:text="${user.getName() + '. Age: ' +
+      <a class = "user_link" th:href="@{/users/{id}(id = ${user.getId()})}" th:text="${user.getUsername() + '. Age: ' +
       user.getAge() + '. Email: ' + user.getEmail()}">No values</a>
     </ul>
   </div>
