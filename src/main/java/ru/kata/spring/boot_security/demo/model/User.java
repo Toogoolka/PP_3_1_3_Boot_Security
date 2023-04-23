@@ -25,15 +25,13 @@ public class User implements UserDetails {
     @Min(value = 0, message = "*Age is incorrect")
     private int age;
     @Column(name = "email")
-    @NotEmpty(message = "*Email should not be empty")
+//    @NotEmpty(message = "*Email should not be empty")
     @Email(message = "*Enter correctly email (example@examp.org)")
     private String email;
 
     @Column(name = "password")
     @Size(min = 4, message = "Password should be min 4 characters")
     private String password;
-    @Transient
-    private String passwordConfirm;
 
     @ManyToMany
     @JoinTable(name = "users_roles",
@@ -130,14 +128,6 @@ public class User implements UserDetails {
 
     public void setRoles(Collection<Role> roles) {
         this.roles = roles;
-    }
-
-    public String getPasswordConfirm() {
-        return passwordConfirm;
-    }
-
-    public void setPasswordConfirm(String passwordConfirm) {
-        this.passwordConfirm = passwordConfirm;
     }
 
 

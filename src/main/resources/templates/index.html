@@ -1,5 +1,6 @@
 <!doctype html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -56,6 +57,13 @@
         .navi__link:hover {
             border-bottom: 2px solid #f8d38e;
         }
+        .welcome {
+            align-self: center;
+            margin-top: 50px;
+            margin-left: 900px;
+            display: flex;
+            font-size: 30px;
+        }
         .info {
             margin-top: 150px;
             margin-bottom: 50px;
@@ -92,6 +100,15 @@
         .link:hover {
             background-color: #69a82c;
         }
+        .logout__link {
+            background-color: #fc6161;
+            width: 100%;
+            font-family: inherit;
+            cursor: pointer;
+        }
+        .logout__link:hover {
+            background-color: #ff3c3c;
+        }
     </style>
     <title>Main page</title>
 </head>
@@ -111,14 +128,30 @@
             </div>
         </section>
     </header>
+    <div class="welcome" sec:autorize="isAuthenticated()">
+        <span class="welcome__item" th:text="'-Welcome, '"/>
+        <span class="welcome__item" sec:authentication="name"/>
+        <span class="welcome__item">!</span>
+    </div>
+
     <div class="info">
         <h1 class="title">DataBase control v1.0</h1>
         <p class="description"><span>>></span> this is database control v1.0</p>
         <p class="description"><span>>></span> let tap any button for start to work</p>
     </div>
     <div class="buttons">
-        <a class="link" href="/new" style="text-align: center; font-size: 24px">create new user</a>
-        <a class="link" href="/data?name=" style="text-align: center; font-size: 24px">database</a>
+        <div sec:authorize="isAuthenticated()">
+            <div sec:authorize="hasRole('ADMIN')">
+                <a class="link" href="/admin/data?name=" style="text-align: center; font-size: 24px">Database</a>
+            </div>
+            <form th:action="@{/logout}" th:method="POST">
+                <button class="link logout__link" style="text-align: center; font-size: 24px" type="submit">Logout</button>
+            </form>
+        </div>
+        <div sec:authorize="!isAuthenticated()">
+            <a class="link" href="/auth/login" style="text-align: center; font-size: 24px">Login</a>
+            <a class="link" href="/auth/registration" style="text-align: center; font-size: 24px">Registration</a>
+        </div>
     </div>
 </body>
 </html>

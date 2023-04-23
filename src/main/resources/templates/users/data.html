@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -42,6 +42,9 @@
     }
     .logout__link {
       background-color: #fc6161;
+      width: 100%;
+      font-family: inherit;
+      cursor: pointer;
     }
     .logout__link:hover {
       background-color: #ff3c3c;
@@ -98,7 +101,7 @@
     }
 
   </style>
-    <title>Database od Users</title>
+    <title>Database of Users</title>
 </head>
 <body>
   <div class="database-container">
@@ -112,16 +115,18 @@
     </div>
 
     <ul class="users_list" th:each="user : ${users}">
-      <a class = "user_link" th:href="@{/users/{id}(id = ${user.getId()})}" th:text="${user.getUsername() + '. Age: ' +
+      <a class = "user_link" th:href="@{/admin/users/{id}(id = ${user.getId()})}" th:text="${user.getUsername() + '. Age: ' +
       user.getAge() + '. Email: ' + user.getEmail()}">No values</a>
     </ul>
   </div>
   <div class="buttons">
-    <a class="link" href="/new" style="text-align: center; font-size: 24px">create new user</a>
+    <div sec:authorize="hasRole('ADMIN')">
+      <a class="link" href="/admin/new" style="text-align: center; font-size: 24px">create new user</a>
+    </div>
     <a class="link" href="/" style="text-align: center; font-size: 24px">Home</a>
-    <a class="link logout__link" href="/logout" style="text-align: center; font-size: 24px" title="logout">Logout</a>
+    <form th:action="@{/logout}" th:method="POST">
+      <button class="link logout__link" style="text-align: center; font-size: 24px" type="submit">Logout</button>
+    </form>
   </div>
-
-
 </body>
 </html>

@@ -135,11 +135,11 @@
 </head>
 <body>
   <div style="width: 450px; margin-top: 150px">
-    <a class="link" href="/data?name=" style="text-align: center; font-size: 24px">back to database</a>
+    <a class="link" href="/admin/data?name=" style="text-align: center; font-size: 24px">back to database</a>
   </div>
   <div class="form">
     <h2 class="header table-header" th:text="${'Edit User#' + user.getId()}">Edit info</h2>
-    <form class="form__container" th:method="PATCH" th:action="@{/users/{id}(id=${user.getId()})}" th:object="${user}">
+    <form class="form__container" th:method="PATCH" th:action="@{/admin/users/{id}(id=${user.getId()})}" th:object="${user}">
       <div class="field_place">
         <label for="name">Name:</label>
         <input type="text" th:field="*{username}" id="name" placeholder="German Sevostianov">
@@ -158,7 +158,7 @@
       <br>
       <button class="btn__submit" type="submit">Update</button>
     </form>
-    <form class="delete_form" th:method="DELETE" th:action="@{/users/{id}(id = ${user.getId()})}">
+    <form class="delete_form" th:method="DELETE" th:action="@{/admin/users/{id}(id = ${user.getId()})}">
       <input class="btn__delete" type="submit" value="Delete user">
     </form>
   </div>
