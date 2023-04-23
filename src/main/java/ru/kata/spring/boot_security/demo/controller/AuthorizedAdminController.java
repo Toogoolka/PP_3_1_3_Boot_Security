@@ -11,6 +11,7 @@ import ru.kata.spring.boot_security.demo.service.UserService;
 import ru.kata.spring.boot_security.demo.util.UserValidator;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 @Controller
 @RequestMapping("/admin")
@@ -27,13 +28,14 @@ public class AuthorizedAdminController {
     }
 
     @GetMapping("/")
-    public String mainPage() {
-        return "index";
+    public String mainPage(Model model, Principal principal) {
+        model.addAttribute("user", userService.findByUsername(principal.getName()));
+        return "user/profile";
     }
     @GetMapping("/data")
     public String show(@RequestParam(value = "name", required = false) String name,
                        Model model) {
-        model.addAttribute("users", userService.findByUsername(name));
+        model.addAttribute("users", userService.findAllByUsername(name));
         return "users/data";
     }
 

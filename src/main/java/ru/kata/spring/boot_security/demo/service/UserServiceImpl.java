@@ -24,13 +24,15 @@ import java.util.stream.Collectors;
 @Service
 @Transactional(readOnly = true)
 public class UserServiceImpl implements UserService {
+    private final RoleRepository roleRepository;
+    private final UserRepository userRepository;
     @Autowired
-    RoleRepository roleRepository;
-    private UserRepository userRepository;
-    @Autowired
-    public void setUserRepository(UserRepository userRepository) {
+    public UserServiceImpl(RoleRepository roleRepository, UserRepository userRepository) {
+        this.roleRepository = roleRepository;
         this.userRepository = userRepository;
     }
+
+
 
     @Override
     public User findOne(Long id) {
@@ -59,8 +61,17 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public List<User> findByUsername(String name) {
+    public List<User> findAllByUsername(String name) {
         return userRepository.findByUsernameContainsIgnoreCase(name);
+    }
+
+    @Override
+    public User findByUsername(String name) {
+        return userRepository.findByUsername(name);
+    }
+    @Override
+    public Role findRoleByName(String name) {
+        return roleRepository.findRoleByName(name);
     }
 
     @Override

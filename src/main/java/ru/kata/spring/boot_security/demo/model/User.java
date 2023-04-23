@@ -25,7 +25,6 @@ public class User implements UserDetails {
     @Min(value = 0, message = "*Age is incorrect")
     private int age;
     @Column(name = "email")
-//    @NotEmpty(message = "*Email should not be empty")
     @Email(message = "*Enter correctly email (example@examp.org)")
     private String email;
 
