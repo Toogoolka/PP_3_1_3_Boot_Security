@@ -3,6 +3,8 @@ package ru.kata.spring.boot_security.demo.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.model.Role;
@@ -28,7 +30,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findOne(Long id) {
         Optional<User> foundUser = userRepository.findById(id);
-        return foundUser.orElse(null);
+        if (foundUser == null) {
+            throw new UsernameNotFoundException(String.format("User with id: '%f' - not found", id));
+        }
+        return foundUser.get();
     }
 
     @Transactional
@@ -57,8 +62,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findByUsername(String name) {
-        return userRepository.findByUsername(name).orElse(null);
+    public User findByUsername(String name) throws UsernameNotFoundException{
+        return userRepository.findByUsername(name).orElse(null );
     }
     @Override
     public Role findRoleByName(String name) {

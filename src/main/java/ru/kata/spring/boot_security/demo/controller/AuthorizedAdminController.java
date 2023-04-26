@@ -70,6 +70,7 @@ public class AuthorizedAdminController {
             return "users/user";
         }
         userService.update(id, user);
+        registrationService.register(user);
         return "redirect:/admin/data?name=";
     }
 

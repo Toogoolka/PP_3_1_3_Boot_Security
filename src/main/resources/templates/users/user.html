@@ -146,6 +146,11 @@
         <p class="errors" th:if ="${#fields.hasErrors('username')}" th:errors="*{username}">Name error</p>
       </div>
       <div class="field_place">
+        <label for="password">Password:</label>
+        <input type="password" th:field="*{password}" id="password">
+        <p class="errors" th:if ="${#fields.hasErrors('password')}" th:errors="*{password}">Name error</p>
+      </div>
+      <div class="field_place">
         <label for="age">Age:</label>
         <input type="number" th:field="*{age}" id="age">
         <p class="errors" th:if ="${#fields.hasErrors('age')}" th:errors="*{age}">Name error</p>
