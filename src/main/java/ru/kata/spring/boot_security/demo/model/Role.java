@@ -10,6 +10,7 @@ import java.util.Set;
 public class Role implements GrantedAuthority {
     @Id
     private  Long id;
+    @Column(name = "name", unique = true)
     private String name;
 
     public Role() {

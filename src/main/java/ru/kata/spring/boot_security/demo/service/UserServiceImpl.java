@@ -2,26 +2,28 @@ package ru.kata.spring.boot_security.demo.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
-import ru.kata.spring.boot_security.demo.repositories.RoleRepository;
 import ru.kata.spring.boot_security.demo.repositories.UserRepository;
+
 import java.util.List;
 import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
-public class UserServiceImpl implements UserService {
-    private final RoleRepository roleRepository;
+public class UserServiceImpl implements UserService, RoleService, UserDetailsService {
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final RoleServiceImpl roleServiceImpl;
     private final UserRepository userRepository;
     @Autowired
-    public UserServiceImpl(RoleRepository roleRepository, UserRepository userRepository) {
-        this.roleRepository = roleRepository;
+    public UserServiceImpl(BCryptPasswordEncoder bCryptPasswordEncoder, RoleServiceImpl roleServiceImpl, UserRepository userRepository) {
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.roleServiceImpl = roleServiceImpl;
         this.userRepository = userRepository;
     }
 
@@ -39,6 +41,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public void save(User user) {
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
 
@@ -46,6 +49,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void update(Long id, User updatedUser) {
         updatedUser.setId(id);
+        updatedUser.setPassword(bCryptPasswordEncoder.encode(updatedUser.getPassword()));
         userRepository.save(updatedUser);
     }
 
@@ -55,7 +59,6 @@ public class UserServiceImpl implements UserService {
         userRepository.deleteById(id);
     }
 
-    @Transactional
     @Override
     public List<User> findAllByUsername(String name) {
         return userRepository.findByUsernameContainsIgnoreCase(name);
@@ -67,11 +70,15 @@ public class UserServiceImpl implements UserService {
     }
     @Override
     public Role findRoleByName(String name) {
-        return roleRepository.findRoleByName(name);
+        return roleServiceImpl.findRoleByName(name);
     }
 
     @Override
-    @Transactional
+    public Role findRoleById(Long id) {
+        return roleServiceImpl.findRoleById(id);
+    }
+
+    @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username).orElse(null);
         if (user == null) {
