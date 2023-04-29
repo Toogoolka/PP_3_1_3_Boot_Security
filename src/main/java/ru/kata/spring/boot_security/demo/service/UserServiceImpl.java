@@ -1,6 +1,6 @@
 package ru.kata.spring.boot_security.demo.service;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -10,9 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.repositories.UserRepository;
-
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 @Transactional(readOnly = true)
@@ -42,6 +42,10 @@ public class UserServiceImpl implements UserService, RoleService, UserDetailsSer
     @Override
     public void save(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+            // ADD ROLE FOR NEW USER HERE
+        if (user.getRoles().size() == 0) {
+            user.setDefaultRole(roleServiceImpl.findRoleById(2L));
+        }
         userRepository.save(user);
     }
 
@@ -49,7 +53,14 @@ public class UserServiceImpl implements UserService, RoleService, UserDetailsSer
     @Override
     public void update(Long id, User updatedUser) {
         updatedUser.setId(id);
+        User existingUser = findOne(id);
+        Set<Role> existingRoles = existingUser.getRoles();
+        Set<Role> updatedRoles = updatedUser.getRoles();
         updatedUser.setPassword(bCryptPasswordEncoder.encode(updatedUser.getPassword()));
+        if(!existingRoles.containsAll(updatedRoles)) {
+            existingRoles.addAll(updatedRoles);
+        }
+        updatedUser.setRoles(existingRoles);
         userRepository.save(updatedUser);
     }
 
@@ -76,6 +87,11 @@ public class UserServiceImpl implements UserService, RoleService, UserDetailsSer
     @Override
     public Role findRoleById(Long id) {
         return roleServiceImpl.findRoleById(id);
+    }
+
+    @Override
+    public List<Role> findAll() {
+        return roleServiceImpl.findAll();
     }
 
     @Override

@@ -139,6 +139,15 @@
                 <input type="text" th:field="*{email}" id="email" placeholder="german@kata.academy">
                 <p class="errors" th:if ="${#fields.hasErrors('email')}" th:errors="*{email}">Name error</p>
             </div>
+            <div class="sel__container">
+                <label>Select a Role: </label>
+                <select id="roles" name="roles">
+                    <option value="0">select role..</option>
+                    <option value="1">ADMIN</option>
+                    <option value="2">USER</option>
+                    </option>
+                </select>
+            </div>
             <br>
             <button class="btn__submit" type="submit">Create new user</button>
         </form>

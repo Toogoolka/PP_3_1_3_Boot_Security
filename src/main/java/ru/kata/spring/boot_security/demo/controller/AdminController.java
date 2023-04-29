@@ -5,24 +5,29 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
-import ru.kata.spring.boot_security.demo.service.UserService;
+import ru.kata.spring.boot_security.demo.service.RoleServiceImpl;
 import ru.kata.spring.boot_security.demo.service.UserServiceImpl;
 import ru.kata.spring.boot_security.demo.util.UserValidator;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
     private final UserServiceImpl userServiceImpl;
     private final UserValidator userValidator;
+    private final RoleServiceImpl roleService;
 
     @Autowired
-    public AdminController(UserServiceImpl userServiceImpl, UserValidator userValidator) {
+    public AdminController(UserServiceImpl userServiceImpl, UserValidator userValidator, RoleServiceImpl roleService) {
         this.userServiceImpl = userServiceImpl;
         this.userValidator = userValidator;
+        this.roleService = roleService;
     }
 
     @GetMapping("/")
@@ -55,7 +60,9 @@ public class AdminController {
 
     @GetMapping("/users/{id}")
     public String showOne(@PathVariable("id") Long id, Model model) {
+        List<Role> roles = new ArrayList<>();
         model.addAttribute("user", userServiceImpl.findOne(id));
+        model.addAttribute("roles",  roleService.findAll());
         return "users/user";
     }
 

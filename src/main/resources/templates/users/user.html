@@ -128,6 +128,22 @@
     .link:hover {
       background-color: #69a82c;
     }
+    .sel__container{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      line-height: 18px;
+    }
+    #selectRole {
+      font-family: "Courier New", sans-serif;
+      font-weight: bold;
+      width: 120px;
+      text-align: center;
+      padding: 6px 8px;
+      border: 1px solid darkgray;
+      border-radius: 3px;
+      outline: none;
+    }
 
 
   </style>
@@ -160,7 +176,16 @@
         <input type="text" th:field="*{email}" id="email" placeholder="german@kata.academy">
         <p class="errors" th:if ="${#fields.hasErrors('email')}" th:errors="*{email}">Name error</p>
       </div>
-      <br>
+      <div class="sel__container">
+        <label>Select a Role: </label>
+        <select id="roles" name="roles">
+          <option value="0">select role..</option>
+          <option value="1">ADMIN</option>
+          <option value="2">USER</option>
+          </option>
+        </select>
+      </div>
+        <br>
       <button class="btn__submit" type="submit">Update</button>
     </form>
     <form class="delete_form" th:method="DELETE" th:action="@{/admin/users/{id}(id = ${user.getId()})}">

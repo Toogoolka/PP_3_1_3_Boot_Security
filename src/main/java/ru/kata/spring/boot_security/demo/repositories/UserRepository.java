@@ -15,6 +15,7 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User, Long> {
     List<User> findByUsernameContainsIgnoreCase(String name);
 
+
     @Query("SELECT u from User u left join fetch u.roles where u.username=:username")
     Optional<User> findByUsername(@Param("username") String username);
 }
