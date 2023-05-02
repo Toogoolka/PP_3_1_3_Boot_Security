@@ -10,15 +10,6 @@ import javax.validation.Valid;
 @Controller
 @RequestMapping("/auth")
 public class AuthController {
-    private final UserValidator userValidator;
-
-    @Autowired
-    public AuthController(UserValidator userValidator) {
-        this.userValidator = userValidator;
-
-
-    }
-
     @GetMapping("/login")
     public String loginPage() {
         return "/auth/login";

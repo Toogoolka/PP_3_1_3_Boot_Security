@@ -116,7 +116,7 @@
 
     <ul class="users_list" th:each="user : ${users}">
       <a class = "user_link" th:href="@{/admin/users/{id}(id = ${user.getId()})}" th:text="${user.getUsername() + '. Age: ' +
-      user.getAge() + '. Email: ' + user.getEmail()}">No values</a>
+      user.getAge() + '. Email: ' + user.getEmail()} + ' Roles: ' + ${user.getRoles()}">No values</a>
     </ul>
   </div>
   <div class="buttons">

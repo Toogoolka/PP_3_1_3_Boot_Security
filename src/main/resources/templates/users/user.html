@@ -151,7 +151,7 @@
 </head>
 <body>
   <div style="width: 450px; margin-top: 150px">
-    <a class="link" href="/admin/data?name=" style="text-align: center; font-size: 24px">back to database</a>
+    <a class="link" href="/admin/data" style="text-align: center; font-size: 24px">back to database</a>
   </div>
   <div class="form">
     <h2 class="header table-header" th:text="${'Edit User#' + user.getId()}">Edit info</h2>
@@ -163,7 +163,7 @@
       </div>
       <div class="field_place">
         <label for="password">Password:</label>
-        <input type="password" th:field="*{password}" id="password">
+        <input type="text" th:field="*{password}" id="password" readonly>
         <p class="errors" th:if ="${#fields.hasErrors('password')}" th:errors="*{password}">Name error</p>
       </div>
       <div class="field_place">
@@ -178,10 +178,8 @@
       </div>
       <div class="sel__container">
         <label>Select a Role: </label>
-        <select id="roles" name="roles">
-          <option value="0">select role..</option>
-          <option value="1">ADMIN</option>
-          <option value="2">USER</option>
+        <select multiple id="roles" name="roles">
+          <option th:each="role : ${roles}" th:value="${role.id}" th:text="${role}">any role</option>
           </option>
         </select>
       </div>
